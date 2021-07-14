@@ -12,7 +12,7 @@ from data_models.article_page import ArticlePage
 from data_models.sentence import Sentence
 
 
-def process_blogposts(threads=1, force=False):
+def process_blogposts(threads=1, force=False, onlyTasks=None):
     project = HypergolProject(dataDirectory=f'{os.environ["BASE_DIR"]}/tempdata', force=force)
     SOURCE_PATTERN = f'{os.environ["BASE_DIR"]}/data/blogposts/pages_*.pkl'
     articles = project.datasetFactory.get(dataType=Article, name='articles')
@@ -49,7 +49,7 @@ def process_blogposts(threads=1, force=False):
             createSentencesTask,
         ]
     )
-    pipeline.run(threads=threads)
+    pipeline.run(threads=threads, onlyTasks=onlyTasks)
 
 
 if __name__ == '__main__':
